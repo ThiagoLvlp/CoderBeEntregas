@@ -1,0 +1,7 @@
+Owned by: @ThiagoLvlp
+
+App ID: 390678
+
+Client ID: Iv1.53828c08064ef6d3
+
+8785fc685c21c33faa3f1b793c2263a15070b690
