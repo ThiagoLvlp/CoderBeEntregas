@@ -53,10 +53,16 @@ router.get('/',(req,res)=>{
 
 router.get("/products", async (req, res) => {
     try {
-        const products = await productsSchema.find();
+        const products = await Product.find();
         res.render('products', {
             user: req.session.user,
-            products: products
+            products: products.map(product => ({
+                title: product.title,
+                description: product.description,
+                price: product.price,
+                category: product.category,
+                _id: product._id
+            }))
         });
     } catch (error) {
         console.error("Error al obtener productos: " + error);
