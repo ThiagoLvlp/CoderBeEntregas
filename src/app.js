@@ -6,16 +6,18 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
-import githubLoginViewRouter from './routes/github-login.views.router.js'
+
 
 //Routes
 import cartsRoutes from './routes/carts.router.js';
 import productsRoutes from './routes/products.router.js';
+import jwtRouter from './routes/jwt.router.js'
 
 //Views
 import viewRouter from './routes/view.router.js';
 import usersViewRouter from './routes/users.views.router.js';
 import sessionsRouter from './routes/sessions.router.js';
+import githubLoginViewRouter from './routes/github-login.views.router.js'
 
 const app = express();
 
@@ -70,6 +72,7 @@ app.use('/api/carts', cartsRoutes);
 app.use("/users", usersViewRouter);
 app.use("/api/sessions", sessionsRouter);
 app.use("/github", githubLoginViewRouter);
+app.use('/api/jwt', jwtRouter)
 
 const connectMongoDB = async ()=>{
     try {

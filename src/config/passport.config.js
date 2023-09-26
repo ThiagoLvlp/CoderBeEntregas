@@ -3,12 +3,36 @@ import passportLocal from 'passport-local';
 import userModel from '../models/user.model.js';
 import { createHash, isValidPassword } from '../utils.js';
 import GitHubStrategy from 'passport-github2';
+import { ExtractJwt } from 'passport-jwt'; // Importa ExtractJwt
+import jwtStrategy from 'passport-jwt';
+import { PRIVATE_KEY } from '../utils.js';
 
+const JwtStrategy = jwtStrategy.Strategy;
+const ExtractJWT = jwtStrategy.ExtractJwt;
 const localStrategy = passportLocal.Strategy;
 const adminemail = 'adminCoder@coder.com';
 const adminpass = 'adminCod3r123';
 
 const initializePassport = () => {
+
+// Estrategia de obtener Token JWT por Cookie:
+passport.use('jwt', new JwtStrategy(
+    {
+        jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+        secretOrKey: PRIVATE_KEY
+    }, async (jwt_payload, done) => {
+        console.log("Entrando a passport Strategy con JWT.");
+        try {
+            console.log("JWT obtenido del payload");
+            console.log(jwt_payload);
+            return done(null, jwt_payload.user);
+        } catch (error) {
+            console.error(error);
+            return done(error);
+        }
+    }
+));
+
 //                PASSPORT CON GITHUB
     passport.use('github', new GitHubStrategy(
         {
@@ -42,7 +66,7 @@ const initializePassport = () => {
             } catch (error) {
                 return done(error)
             }
-        }))
+        }));
 
 //                   PASSPORT LOCAL
     passport.use('register', new localStrategy(
@@ -125,6 +149,19 @@ const initializePassport = () => {
         }
     });
 };
+
+const cookieExtractor = req => {
+    let token = null;
+    console.log("Entrando a Cookie Extractor");
+    if (req && req.cookies) {
+        console.log("Cookies presentes: ");
+        console.log(req.cookies);
+        token = req.cookies['jwtCookieToken']
+        console.log("Token obtenido desde Cookie:");
+        console.log(token);
+    }
+    return token;
+}
 
 export default initializePassport;
 

@@ -2,6 +2,7 @@ import { Router } from 'express';
 import passport from 'passport';
 import initializePassport from '../config/passport.config.js';
 import Product from '../models/productsmodel.js';
+import { generateJWToken } from '../utils.js';
 
 const router = Router();
 initializePassport();
@@ -26,21 +27,21 @@ router.post("/register", passport.authenticate('register', { failureRedirect: '/
 })
 
 router.post("/login", passport.authenticate("login", { failureRedirect: '/api/sessions/fail-login' }), async (req, res) => {
-    console.log("User found to login:"); 
+    console.log("User found to login:");
     const user = req.user;
     console.log(user);
     if (!user) return res.status(401).send({ status: "error", error: "credenciales incorrectas" });
     try {
-        const products = await Product.find(); 
-        console.log(products); 
-        req.session.products = products; 
+        const products = await Product.find();
+        console.log(products);
+        req.session.products = products;
         console.log(req.session.products);
     } catch (error) {
         console.error('Error al recuperar los productos:', error);
         res.status(500).send('Error interno del servidor');
         return;
     }
-    
+
     req.session.user = {
         name: `${user.first_name} ${user.last_name}`,
         email: user.email,
@@ -48,12 +49,18 @@ router.post("/login", passport.authenticate("login", { failureRedirect: '/api/se
         role: user.role
     };
 
-    res.send({ status: "success", payload: req.session.user, message: "¡Primer logueo realizado! :)" });
+    const access_token = generateJWToken(user);
+    console.log(access_token);
+
+    res.json({
+        status: "success",
+        payload: {
+            user: req.session.user,
+            access_token: access_token,
+        },
+        message: "¡Primer logueo realizado! :)"
+    });
 });
-
-
-
-
 
 router.get("/fail-register", (req, res) => {
     res.status(401).send({ error: "Failed to process register!" });
