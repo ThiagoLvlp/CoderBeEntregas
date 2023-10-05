@@ -2,7 +2,7 @@ import express from 'express';
 import __dirname from '../utils.js'
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
-import productsSchema from '../models/productsmodel.js';
+import productsSchema from '../services/db/models/productsmodel.js';
 
 const router = express.Router();
 

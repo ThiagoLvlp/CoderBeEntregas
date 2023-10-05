@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import passport from 'passport';
 import initializePassport from '../config/passport.config.js';
-import Product from '../models/productsmodel.js';
+import Product from '../services/db/models/productsmodel.js';
 import { generateJWToken } from '../utils.js';
 
 const router = Router();
@@ -33,9 +33,7 @@ router.post("/login", passport.authenticate("login", { failureRedirect: '/api/se
     if (!user) return res.status(401).send({ status: "error", error: "credenciales incorrectas" });
     try {
         const products = await Product.find();
-        console.log(products);
         req.session.products = products;
-        console.log(req.session.products);
     } catch (error) {
         console.error('Error al recuperar los productos:', error);
         res.status(500).send('Error interno del servidor');

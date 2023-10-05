@@ -6,12 +6,16 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
+import config from './config/config.js';
 
 
 //Routes
 import cartsRoutes from './routes/carts.router.js';
 import productsRoutes from './routes/products.router.js';
 import jwtRouter from './routes/jwt.router.js'
+
+// //Custom - Extended
+import UsersExtendRouter from './routes/custom/users.extenden.router.js'
 
 //Views
 import viewRouter from './routes/view.router.js';
@@ -29,7 +33,8 @@ app.engine('handlebars', handlebars.engine());
 app.set('views', __dirname + '/views/');
 app.set('view engine', 'handlebars');
 
-const SERVER_PORT = 8080;
+// const SERVER_PORT = 8080;
+const SERVER_PORT = config.port
 app.listen(8080, () => {
     console.log("Servidor escuchando por el puerto: " + SERVER_PORT);
 });
@@ -73,6 +78,10 @@ app.use("/users", usersViewRouter);
 app.use("/api/sessions", sessionsRouter);
 app.use("/github", githubLoginViewRouter);
 app.use('/api/jwt', jwtRouter)
+
+const usersExtendRouter = new UsersExtendRouter();
+app.use("/api/extend/users", usersExtendRouter.getRouter());
+
 
 const connectMongoDB = async ()=>{
     try {

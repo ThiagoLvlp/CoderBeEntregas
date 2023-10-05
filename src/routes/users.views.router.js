@@ -1,5 +1,5 @@
 import { Router } from "express";
-import productsSchema from '../models/productsmodel.js';
+import productsSchema from '../services/db/models/productsmodel.js';
 import { authToken } from '../utils.js';
 import passport from "passport";
 
