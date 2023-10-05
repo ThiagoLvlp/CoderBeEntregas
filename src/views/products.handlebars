@@ -2,35 +2,75 @@
 <html>
 <head>
     <title>Products</title>
+    <!-- Enlace al archivo CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Estilo personalizado para el encabezado fijo */
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 112, 224, 0.5); /* Fondo azul semi-transparente */
+            color: #fff; /* Color del texto del encabezado */
+            padding: 5px 0; /* Espaciado interno del encabezado más pequeño */
+            text-align: center; /* Alineación del texto del encabezado */
+            z-index: 1000; /* Capa z-index para superponer el encabezado sobre el contenido */
+        }
+        /* Estilo personalizado para reducir el tamaño del texto en el encabezado */
+        .header-text {
+            font-size: 16px; /* Tamaño de fuente más pequeño */
+            margin: 0; /* Elimina el margen en los párrafos del encabezado */
+        }
+        /* Estilo para el botón de logout */
+        .logout-button {
+            margin-top: 5px; /* Espacio superior para separar el botón del texto */
+        }
+    </style>
 </head>
 <body>
-    <h1>Bienvenido </h1>
-    <h3> - {{user.name}} - Edad:{{user.age}} - Email:{{user.email}} - Rol: "{{user.role}}"</h3>
-<form action="/api/sessions/logout" method="POST">
-    <button type="submit">Logout</button>
-</form>
-    <p><div>
-    <h1>Products List</h1>
-</div></p>
-{{#each products}}
-    <div class="products">
-        <h2>{{this.title}}</h2>
-        <p>{{this.description}}</p>
-        <p>Price: ${{this.price}}</p>
-        <p>Category: {{this.category}}</p>
-        <button onclick="addToCart('{{this._id}}')">Add to Cart</button>
-    </div>
-{{/each}}
-
-
-    <div class="pagination">
-        {{#if hasNextPage}}
-            <a href="/products?page={{nextPage}}">Next Page</a>
-        {{/if}}
-        {{#if hasPrevPage}}
-            <a href="/products?page={{prevPage}}">Previous Page</a>
-        {{/if}}
+    <!-- Encabezado fijo -->
+    <div class="fixed-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="display-5 header-text mb-0">Bienvenido</h1>
+                    <h3 class="header-text mb-0">- {{user.name}} - Edad: {{user.age}} - Email: {{user.email}} - Rol: "{{user.role}}"</h3>
+                </div>
+                <form action="/api/sessions/logout" method="POST" class="logout-button">
+                    <button type="submit" class="btn btn-light">Salir</button>
+                </form>
+            </div>
+        </div>
     </div>
 
+    <!-- Contenido principal -->
+    <div class="container mt-5"> <!-- Agrega un margen superior para separar el contenido del encabezado -->
+        <h1>Products List</h1>
+        {{#each products}}
+            <div class="products">
+                <h2>{{this.title}}</h2>
+                <p>{{this.description}}</p>
+                <p>Price: ${{this.price}}</p>
+                <p>Category: {{this.category}}</p>
+                <button onclick="addToCart('{{this._id}}')">Add to Cart</button>
+            </div>
+        {{/each}}
+
+        <!-- Paginación -->
+        <div class="pagination mt-3">
+            {{#if hasNextPage}}
+                <a href="/products?page={{nextPage}}" class="btn btn-primary">Next Page</a>
+            {{/if}}
+            {{#if hasPrevPage}}
+                <a href="/products?page={{prevPage}}" class="btn btn-primary">Previous Page</a>
+            {{/if}}
+        </div>
+    </div>
+
+    <!-- Incluye el script de Bootstrap y otros scripts necesarios aquí -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

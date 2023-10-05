@@ -1,20 +1,42 @@
-<div>
-    <h1>Login</h1>
-    <form id="loginForm">
-
-        <label>Email</label>
-        <input name="email">
-        <br />
-
-        <label>Contraseña</label>
-        <input name="password">
-        <br />
-
-        <input type="submit">
-    </form>
-        <p>¿Tienes cuenta de Github? <a href="/github/login">Haz login por Github</a></p>
-    <div id="error-message" style="color: red; display: none;">Usuario y/o contraseña incorrecta. Por favor, inténtelo de nuevo.</div>
-    <p>Si no tenes una cuenta: <a href="/users/register"> Ingrese aqui</a></p>
-</div>
-
-<script src="/js/login.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Estilos personalizados -->
+    <style>
+        .custom-container {
+            max-width: 400px; 
+            margin: auto; 
+        }
+    </style>
+</head>
+<body>
+    <div style="background-image: url('https://scontent.frcu4-1.fna.fbcdn.net/v/t39.30808-6/294052932_102901625837247_62687261274506797_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=52f669&_nc_ohc=Au5fCamInS4AX8kBq1b&_nc_ht=scontent.frcu4-1.fna&oh=00_AfD9migKFpE4lt5TzJorE_kfmCbhDySBk50YZlGJsfOvKA&oe=65231973'); background-size: cover; background-repeat: no-repeat; background-attachment: fixed; font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <div class="container custom-container" style="background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); text-align: center;">
+            <h1 class="display-7">Iniciar Sesión</h1>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email/Usuario</label>
+                    <input type="email" class="form-control" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary">Ingresar</button>
+            </form>
+            <p>¿Tienes cuenta de Github? <a href="/github/login" class="btn btn-link">Haz login por Github</a></p>
+            <div id="error-message" class="text-danger" style="display: none;">Usuario y/o contraseña incorrecta. Por favor, inténtelo de nuevo.</div>
+            <p>Si no tienes una cuenta: <a href="/users/register" class="btn btn-link">Ingrese aquí</a></p>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/login.js"></script>
+</body>
+</html>

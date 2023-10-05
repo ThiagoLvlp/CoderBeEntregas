@@ -19,7 +19,7 @@ const Product = mongoose.model('Product', productSchema);
 router.get('/api/products', async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
-        const limit = 21; // Ajustar el número de productos por página
+        const limit = 100; // Ajustar el número de productos por página
         const skip = (page - 1) * limit;
         
         const products = await Product.find()
